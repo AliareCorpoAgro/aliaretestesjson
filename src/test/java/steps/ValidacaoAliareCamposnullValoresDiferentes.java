@@ -61,15 +61,16 @@ public class ValidacaoAliareCamposnullValoresDiferentes {
     public void seraValidadoASomaTotalDosCampos(String string) {
         JSONArray jsonArray;
         jsonArray = response.getJSONArray("enterprises_buy");
-
+        int valorTotal = 0;
         for (Object listEnterprises : jsonArray) {
             newResponse = new JSONObject(listEnterprises.toString());
             if (newResponse.has("especialization")) {
                 newResponse = newResponse.getJSONObject("especialization");
                 int sam = (int) newResponse.get("base_contratual");
-                System.out.println(sam);
+                valorTotal = valorTotal + sam;
             }
         }
+        System.out.println("O valor total do array enterprises_buy_agro, path: base_contratual: " + valorTotal);
     }
 
     @Then("Sera validado que o campo tipo nao seja exista valores diferentes de AGRO e VENDA")
