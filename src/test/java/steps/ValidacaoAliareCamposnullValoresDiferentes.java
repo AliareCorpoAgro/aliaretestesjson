@@ -62,18 +62,55 @@ public class ValidacaoAliareCamposnullValoresDiferentes {
         JSONArray jsonArray;
         jsonArray = response.getJSONArray("enterprises_buy");
 
+        int  valueTotal = 0;
         for (Object listEnterprises : jsonArray) {
             newResponse = new JSONObject(listEnterprises.toString());
             if (newResponse.has("especialization")) {
                 newResponse = newResponse.getJSONObject("especialization");
                 int sam = (int) newResponse.get("base_contratual");
-                System.out.println(sam);
+                valueTotal = valueTotal + sam;
+
             }
         }
+        System.out.println("O valor do array enterprises_buy, path: base_contratual: " + valueTotal);
+
+        JSONArray jsonArrayAgro;
+        jsonArrayAgro = response.getJSONArray("enterprises_buy_agro");
+
+        int  valueTotalAgro = 0;
+        for (Object listAgro : jsonArrayAgro) {
+            newResponse = new JSONObject(listAgro.toString());
+            if (newResponse.has("especialization")) {
+                newResponse = newResponse.getJSONObject("especialization");
+                int samAgro = (int) newResponse.get("base_contratual");
+                valueTotalAgro = valueTotalAgro + samAgro;
+            }
+        }
+        System.out.println("O valor do array enterprises_buy_agro, path: base_contratual: " + valueTotalAgro);
     }
 
     @Then("Sera validado que o campo tipo nao seja exista valores diferentes de AGRO e VENDA")
     public void seraValidadoQueOCampoTipoNaoSejaExistaValoresDiferentesDeAGROEVENDA() {
+        JSONArray jsonArray;
+        jsonArray = response.getJSONArray("enterprises_buy");
+
+        for (Object listEnterprises : jsonArray) {
+            newResponse = new JSONObject(listEnterprises.toString());
+            if (newResponse.has("especialization")) {
+                newResponse = newResponse.getJSONObject("especialization");
+            }
+        }
+        JSONArray jsonAgro;
+        jsonAgro = response.getJSONArray("enterprises_buy_agro");
+
+        for (Object listAgro : jsonAgro){
+            newResponse = new JSONObject(listAgro.toString());
+            if (newResponse.has("tipo")){
+                if (newResponse.get("tipo") != "AGRO" || newResponse.get("tipo") != "VENDA"){
+                    throw new RuntimeException("O campo Tipo só pode ser AGRO ou VENDA");
+                }
+            }
+        }
 
     }
 }
