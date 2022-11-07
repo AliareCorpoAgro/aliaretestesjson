@@ -13,7 +13,7 @@ public class RestComponents {
 
     public static void iFNull(JSONObject response, String pathNull){
         if (response.get(pathNull).getClass().getSimpleName().equals("Null")){
-            throw new RuntimeException("O campo está Null:\n" + pathNull);
+            throw new RuntimeException("O campo está Null: " + pathNull+" id: "+response.get("id"));
         }
     }
     public static String Inicialization(String endpoint){
