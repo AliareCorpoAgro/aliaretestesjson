@@ -16,5 +16,8 @@ public class RestComponents {
             throw new RuntimeException("O campo está Null:\n" + pathNull);
         }
     }
+    public static String Inicialization(String endpoint){
+        return given().when().get(endpoint).then().extract().asString();
+    }
 
 }

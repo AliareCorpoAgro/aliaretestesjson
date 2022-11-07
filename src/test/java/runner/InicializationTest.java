@@ -12,7 +12,8 @@ import static io.restassured.RestAssured.given;
         features = {"features"},
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         glue = {"steps"},
-        publish = true
+        publish = true,
+        tags = "@Test"
 )
 public class InicializationTest {
 

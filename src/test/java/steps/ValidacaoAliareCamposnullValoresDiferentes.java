@@ -51,7 +51,7 @@ public class ValidacaoAliareCamposnullValoresDiferentes {
                 if (newResponse.has("command")) {
                     iFNull(newResponse, "command");
                     newResponse = newResponse.getJSONObject("command");
-//                    iFNull(newResponse, "type");
+                    iFNull(newResponse, "type");
                 }
             }
         }
@@ -106,7 +106,8 @@ public class ValidacaoAliareCamposnullValoresDiferentes {
         for (Object listAgro : jsonAgro){
             newResponse = new JSONObject(listAgro.toString());
             if (newResponse.has("tipo")){
-                if (newResponse.get("tipo") != "AGRO" || newResponse.get("tipo") != "VENDA"){
+                String getTipo = newResponse.toString();
+                if (getTipo != "AGRO" || getTipo != "VENDA"){
                     throw new RuntimeException("O campo Tipo só pode ser AGRO ou VENDA");
                 }
             }
