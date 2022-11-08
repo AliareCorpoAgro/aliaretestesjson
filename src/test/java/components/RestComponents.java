@@ -17,5 +17,4 @@ public class RestComponents {
             throw new RuntimeException("O campo está Null:\n" + pathNull + " id: " + response.get("id"));
         }
     }
-
 }
