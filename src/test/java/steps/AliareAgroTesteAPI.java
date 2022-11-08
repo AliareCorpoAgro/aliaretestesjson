@@ -14,61 +14,19 @@ public class AliareAgroTesteAPI {
 
     @Given("Que seja efetuado um GET no endpoint daMockable {string}")
     public void queSejaEfetuadoUmGETNoEndpointDaMockable(String endpoint) {
-        String inicializationTest = Inicialization(endpoint);
+        String inicializationTest = RestConnection(endpoint);
         response = new JSONArray(inicializationTest);
     }
 
     @When("Validar os unicos campos que podem ser null price_sign,currency,rating,category")
     public void validarOsUnicosCamposQuePodemSerNullPriceSignCurrencyRatingCategory() {
-        for (Object listArray : response) {
+        String[] listVerificationNull = {"id", "brand", "name", "price", "image_link", "product_link", "website_link", "description", "product_type", "tag_list", "created_at", "updated_at", "product_api_url", "api_featured_image", "product_colors"};
+        for (Object listArray : response){
             JSONObject json = new JSONObject(listArray.toString());
-            if (json.has("id")) {
-                iFNull(json, "id");
-                if (json.has("brand")) {
-                    iFNull(json, "brand");
-                    if (json.has("name")) {
-                        iFNull(json, "name");
-                        if (json.has("price")) {
-                            iFNull(json, "price");
-                            if (json.has("image_link")) {
-                                iFNull(json, "image_link");
-                                if (json.has("product_link")) {
-                                    iFNull(json, "product_link");
-                                    if (json.has("website_link")) {
-                                        iFNull(json, "website_link");
-                                        if (json.has("description")) {
-                                            iFNull(json, "description");
-                                            if (json.has("product_type")) {
-                                                iFNull(json, "product_type");
-                                                if (json.has("tag_list")) {
-                                                    iFNull(json, "tag_list");
-                                                    if (json.has("created_at")) {
-                                                        iFNull(json, "created_at");
-                                                        if (json.has("updated_at")) {
-                                                            iFNull(json, "updated_at");
-                                                            if (json.has("product_api_url")) {
-                                                                iFNull(json, "product_api_url");
-                                                                if (json.has("api_featured_image")) {
-                                                                    iFNull(json, "api_featured_image");
-                                                                    if (json.has("product_colors")) {
-                                                                        iFNull(json, "product_colors");
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            for (Object listNull : listVerificationNull){
+                iFNull(json, listNull.toString());
             }
         }
-
     }
 
     @When("Sera validado a quantidade dentro do campo {string}, sera permitido apenas {int} itens")
@@ -80,7 +38,7 @@ public class AliareAgroTesteAPI {
                 int enterprise = jsonArray.length();
                 System.out.println("A empresa " + jsonObject.get("name") + " tem: " + enterprise + " itens dentro do campo product_colors");
                 if (jsonArray.length() > 20) {
-                    throw new RuntimeException("Só é permitido 20 itens para cada empresa:\n" + jsonObject.get("name"));
+                    throw new RuntimeException("Só é permitido 20 itens para cada empresa:\n" + jsonObject.get("name") + " tem " + jsonArray.length() + " objetos");
                 }
             }
         }
@@ -95,7 +53,7 @@ public class AliareAgroTesteAPI {
                 int enterprise = jsonArrayTagList.length();
                 System.out.println("A empresa " + jsonTagList.get("name") + " tem: " + enterprise + " itens dentro do campo tag_list");
                 if (jsonArrayTagList.length() > 10) {
-                    throw new RuntimeException("Só é permitido 10 itens para cada empresa:\n" + jsonTagList.get("name"));
+                    throw new RuntimeException("Só é permitido 10 itens para cada empresa:\n" + jsonTagList.get("name") + " tem " + jsonArrayTagList.length() + " objetos");
                 }
             }
         }
