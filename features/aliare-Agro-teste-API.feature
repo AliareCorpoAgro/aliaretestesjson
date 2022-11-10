@@ -1,5 +1,5 @@
 Feature: Validar Json aliare AGRO
-@Test
+
   Scenario: Validando Json aliare AGRO
     Given Que seja efetuado um GET no endpoint daMockable "http://demo7063957.mockable.io/"
     When Validar os unicos campos que podem ser null price_sign,currency,rating,category
