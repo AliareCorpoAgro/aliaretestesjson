@@ -1,6 +1,5 @@
 package steps;
 
-import components.RestComponents;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -11,7 +10,7 @@ import java.math.BigDecimal;
 
 import static components.RestComponents.*;
 
-public class AliareAgroTesteAPIJson3 {
+public class ValidacaoAliareUnicoscamposnullCamposvalosdiferentes {
     private JSONArray response;
 
     @Given("Que seja efetuado um GET no endpoit do terceiro JSON {string}")
@@ -39,12 +38,12 @@ public class AliareAgroTesteAPIJson3 {
             if (jsonValidation.has("tag_list")) {
                 JSONArray jsonArrayValidation = jsonValidation.getJSONArray("tag_list");
                 int validationTagList = jsonArrayValidation.length();
-//                System.out.println("O id: " + jsonValidation.get("id") + " tem o valor de tag_list igual a: " + validationTagList);
+                System.out.println("O id: " + jsonValidation.get("id") + " tem o valor de tag_list igual a: " + validationTagList);
             }
             if (jsonValidation.has("product_colors")) {
                 JSONArray jsonArrayVAlidationProduct = jsonValidation.getJSONArray("product_colors");
                 int validationProduct = jsonArrayVAlidationProduct.length();
-//                System.out.println("O id: " + jsonValidation.get("id") + " tem o valor do product_colors igual a: " + validationProduct);
+                System.out.println("O id: " + jsonValidation.get("id") + " tem o valor do product_colors igual a: " + validationProduct);
             }
         }
 
@@ -57,7 +56,7 @@ public class AliareAgroTesteAPIJson3 {
             if (jsonRating.has("rating")) {
                 String rating = jsonRating.get("rating").toString();
                 if (rating.equals("0")) {
-//                    System.out.println("O id:" + jsonRating.get("id") + " contem rating: " + rating);
+                    System.out.println("O id:" + jsonRating.get("id") + " contem rating: " + rating);
                 }
             }
         }
@@ -70,7 +69,7 @@ public class AliareAgroTesteAPIJson3 {
             if (jsonCategory.has("category")) {
                 String category = jsonCategory.get("category").toString();
                 if (category.equals("invalid")) {
-//                    System.out.println("O id: " + jsonCategory.get("id") + " tem o valor " + category);
+                    System.out.println("O id: " + jsonCategory.get("id") + " tem o valor " + category);
                 }
             }
         }
@@ -88,11 +87,10 @@ public class AliareAgroTesteAPIJson3 {
                     int currencyInt = (int) jsonValidation.get("currency");
                     BigDecimal ratingBigDecimal = (BigDecimal) jsonValidation.get("rating");
                     double ratingDouble = ratingBigDecimal.doubleValue();
-                    if (currencyInt == 1000) {
-                        if (ratingDouble >= 9.5 && ratingDouble < 10) {
-                        } else
-                            System.out.println("O id: " + jsonValidation.get("id") + " esta irregular e precisa de uma correcao");
-                    }
+                    if (currencyInt == 1000 && ratingDouble >= 9.5 && ratingDouble < 10) {
+
+                    } else
+                        System.out.println("O id: " + jsonValidation.get("id") + " esta irregular e precisa de uma correcao");
                 }
             }
         }
@@ -100,14 +98,14 @@ public class AliareAgroTesteAPIJson3 {
 
     @Then("Sera feita a validacao que os campos {string} e {string} nao pode ter a quantidade maior que que {int}")
     public void seraFeitaAValidacaoQueOsCamposENaoPodeTerAQuantidadeMaiorQueQue(String string, String string2, Integer int1) {
-        for (Object listValidationCamp : response){
+        for (Object listValidationCamp : response) {
             JSONObject jsonValidationCamp = new JSONObject(listValidationCamp.toString());
             JSONArray jsonArrayTagList = jsonValidationCamp.getJSONArray("tag_list");
             int tagList = jsonArrayTagList.length();
             JSONArray jsonArrayProductColors = jsonValidationCamp.getJSONArray("product_colors");
             int productColors = jsonArrayProductColors.length();
-            if (tagList > 10 ){
-                if (productColors > 10 ){
+            if (tagList > 10) {
+                if (productColors > 10) {
                     throw new RuntimeException("O id: " + jsonValidationCamp.get("id") + " tem os campos tag_list e products_colors maior do que 10");
                 }
             }

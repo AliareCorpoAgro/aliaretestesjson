@@ -1,6 +1,5 @@
 package steps;
 
-import components.RestComponents;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -9,7 +8,7 @@ import org.json.JSONObject;
 
 import static components.RestComponents.*;
 
-public class AliareAgroTesteAPI {
+public class ValidacaoAliareUnicoscamposnullCamposquantidasValordiferente {
     private JSONArray response;
 
     @Given("Que seja efetuado um GET no endpoint daMockable {string}")

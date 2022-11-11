@@ -1,16 +1,13 @@
 package steps;
 
-import components.RestComponents;
 import io.cucumber.java.en.*;
-import io.restassured.RestAssured;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.junit.Assert;
 
 import static components.RestComponents.RestConnection;
 import static components.RestComponents.iFNull;
 
-public class ValidacaoAliareCamposnullValoresDiferentes {
+public class ValidacaoAliareCamposnullValoresDiferentesSoma {
     private JSONObject response;
     private JSONObject newResponse;
 
