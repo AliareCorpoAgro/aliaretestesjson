@@ -7,6 +7,8 @@ import io.cucumber.java.en.When;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+
 import static components.RestComponents.*;
 
 public class AliareAgroTesteAPIJson3 {
@@ -79,20 +81,17 @@ public class AliareAgroTesteAPIJson3 {
     public void seraValidadoCasoOCampoForIgualAOCampoPrecisarSerIgualOuACimaNaoPodeUltrapassar(String string, Integer int1, String string2, Double double1, Integer int2) {
         for (Object listValidation : response) {
             JSONObject jsonValidation = new JSONObject(listValidation.toString());
-            if (jsonValidation.has("currency") && jsonValidation.has("rating")) {
-                if (jsonValidation.get("rating").getClass().getSimpleName().equals("Integer") || jsonValidation.get("rating").getClass().getSimpleName().equals("BigDecimal")) {
-                    if (jsonValidation.get("currency").getClass().getSimpleName().equals("Integer") || jsonValidation.get("Integer").getClass().getSimpleName().equals("BigDecimal")) {
-                        String currency = jsonValidation.get("currency").toString();
-                        int numberInt = Integer.parseInt(currency);
-                        String rating = jsonValidation.get("rating").toString();
-                        double numberDouble = Double.parseDouble(rating);
-                        System.out.println(numberInt);
-                        if (numberInt == 1000) {
-                            if (numberDouble >= 9.5 && numberDouble < 10.0) {
-                            } else {
-                                System.out.println("O id: " + jsonValidation.get("id") + " esta irregular e precisa de uma correcao");
-                            }
-                        }
+            String currencyClass = jsonValidation.get("currency").getClass().getSimpleName();
+            String ratingClass = jsonValidation.get("rating").getClass().getSimpleName();
+            if (!currencyClass.equals("Null")) {
+                if (currencyClass.equals("Integer") && ratingClass.equals("BigDecimal")) {
+                    int currencyInt = (int) jsonValidation.get("currency");
+                    BigDecimal ratingBigDecimal = (BigDecimal) jsonValidation.get("rating");
+                    double ratingDouble = ratingBigDecimal.doubleValue();
+                    if (currencyInt == 1000) {
+                        if (ratingDouble >= 9.5 && ratingDouble < 10) {
+                        } else
+                            System.out.println("O id: " + jsonValidation.get("id") + " esta irregular e precisa de uma correcao");
                     }
                 }
             }
@@ -101,6 +100,18 @@ public class AliareAgroTesteAPIJson3 {
 
     @Then("Sera feita a validacao que os campos {string} e {string} nao pode ter a quantidade maior que que {int}")
     public void seraFeitaAValidacaoQueOsCamposENaoPodeTerAQuantidadeMaiorQueQue(String string, String string2, Integer int1) {
+        for (Object listValidationCamp : response){
+            JSONObject jsonValidationCamp = new JSONObject(listValidationCamp.toString());
+            JSONArray jsonArrayTagList = jsonValidationCamp.getJSONArray("tag_list");
+            int tagList = jsonArrayTagList.length();
+            JSONArray jsonArrayProductColors = jsonValidationCamp.getJSONArray("product_colors");
+            int productColors = jsonArrayProductColors.length();
+            if (tagList > 10 ){
+                if (productColors > 10 ){
+                    throw new RuntimeException("O id: " + jsonValidationCamp.get("id") + " tem os campos tag_list e products_colors maior do que 10");
+                }
+            }
+        }
 
     }
 }
