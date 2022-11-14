@@ -19,37 +19,30 @@ public class ValidacaoAliareCamposnullValoresDiferentesSoma {
 
     @When("For efetuado validacao de campos para que nao sejam null")
     public void forEfetuadoValidacaoDeCamposParaQueNaoSejamNull() {
-
+//        System.out.println(response.get("corporation"));
+        iFNull(response, "corporation");
         JSONArray jsonArray;
         jsonArray = response.getJSONArray("enterprises_buy");
         iFNull(response, "enterprises_buy");
 
+        String[] listEnterprisesBuyNull = {"nome", "cnpj", "inscricao_estadual", "data_abertura", "cep", "tipo", "especialization", "command", "type", "base_contratual"};
+
         for (Object listEnterprises : jsonArray) {
             newResponse = new JSONObject(listEnterprises.toString());
-            if (newResponse.has("especialization")) {
-                iFNull(newResponse, "especialization");
-                newResponse = newResponse.getJSONObject("especialization");
-                if (newResponse.has("command")) {
-                    iFNull(newResponse, "command");
-                    newResponse = newResponse.getJSONObject("command");
-                    iFNull(newResponse, "type");
-                }
+            for (Object listNull : listEnterprisesBuyNull) {
+                iFNull(newResponse, listNull.toString());
             }
         }
         JSONArray jsonArrayAgro;
         jsonArrayAgro = response.getJSONArray("enterprises_buy_agro");
         iFNull(response, "enterprises_buy_agro");
 
+        String[] listEnterpriseBuyAgro = {"nome", "cnpj", "inscricao_estadual", "data_abertura", "cep", "tipo", "especialization", "command", "type", "base_contratual"};
+
         for (Object listAgro : jsonArrayAgro) {
             newResponse = new JSONObject(listAgro.toString());
-            if (newResponse.has("especialization")) {
-                iFNull(newResponse, "especialization");
-                newResponse = newResponse.getJSONObject("especialization");
-                if (newResponse.has("command")) {
-                    iFNull(newResponse, "command");
-                    newResponse = newResponse.getJSONObject("command");
-                    iFNull(newResponse, "type");
-                }
+            for (Object listNullAgro : listEnterpriseBuyAgro) {
+                iFNull(newResponse, listNullAgro.toString());
             }
         }
     }
@@ -59,7 +52,7 @@ public class ValidacaoAliareCamposnullValoresDiferentesSoma {
         JSONArray jsonArray;
         jsonArray = response.getJSONArray("enterprises_buy");
 
-        int  valueTotal = 0;
+        int valueTotal = 0;
         for (Object listEnterprises : jsonArray) {
             newResponse = new JSONObject(listEnterprises.toString());
             if (newResponse.has("especialization")) {
@@ -74,7 +67,7 @@ public class ValidacaoAliareCamposnullValoresDiferentesSoma {
         JSONArray jsonArrayAgro;
         jsonArrayAgro = response.getJSONArray("enterprises_buy_agro");
 
-        int  valueTotalAgro = 0;
+        int valueTotalAgro = 0;
         for (Object listAgro : jsonArrayAgro) {
             newResponse = new JSONObject(listAgro.toString());
             if (newResponse.has("especialization")) {
@@ -100,11 +93,11 @@ public class ValidacaoAliareCamposnullValoresDiferentesSoma {
         JSONArray jsonAgro;
         jsonAgro = response.getJSONArray("enterprises_buy_agro");
 
-        for (Object listAgro : jsonAgro){
+        for (Object listAgro : jsonAgro) {
             newResponse = new JSONObject(listAgro.toString());
-            if (newResponse.has("tipo")){
+            if (newResponse.has("tipo")) {
                 String getTipo = newResponse.toString();
-                if (getTipo != "AGRO" || getTipo != "VENDA"){
+                if (getTipo != "AGRO" || getTipo != "VENDA") {
                     throw new RuntimeException("O campo Tipo só pode ser AGRO ou VENDA");
                 }
             }

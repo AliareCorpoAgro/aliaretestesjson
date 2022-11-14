@@ -63,7 +63,7 @@ public class ValidacaoAliareUnicoscamposnullCamposquantidasValordiferente {
         for (Object listProductTipo : response) {
             JSONObject jsonProductTipo = new JSONObject(listProductTipo.toString());
             if (jsonProductTipo.get("product_type").equals("em analise")) {
-                throw new RuntimeException("O campo não pode tá em analise:\n" + jsonProductTipo.get("name"));
+                throw new RuntimeException("O campo product_type não pode tá em analise:\n" + "id: " + jsonProductTipo.get("id") + " do cliente: " + jsonProductTipo.get("name"));
             }
         }
     }

@@ -14,7 +14,13 @@ public class RestComponents {
 
     public static void iFNull(JSONObject response, String pathNull) {
         if (response.has(pathNull) && response.get(pathNull).getClass().getSimpleName().equals("Null")) {
-            throw new RuntimeException("O campo está Null:\n" + pathNull + " id: " + response.get("id"));
+//            throw new RuntimeException("O campo está Null:\n" + pathNull + " id: " + response.get("id"));
+            if (response.has("id")) {
+                throw new RuntimeException("O campo está Null:\n" + pathNull + ", Do id: " + response.get("id"));
+            } else if (response.has("nome")) {
+                throw new RuntimeException("O campo está Null:\n" + pathNull + ", Do cliente: " + response.get("nome"));
+            } else throw new RuntimeException("O campo está Null:\n" + pathNull);
+
         }
     }
 }

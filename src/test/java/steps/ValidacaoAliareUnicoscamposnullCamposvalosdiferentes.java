@@ -69,7 +69,7 @@ public class ValidacaoAliareUnicoscamposnullCamposvalosdiferentes {
             if (jsonCategory.has("category")) {
                 String category = jsonCategory.get("category").toString();
                 if (category.equals("invalid")) {
-                    System.out.println("O id: " + jsonCategory.get("id") + " tem o valor " + category);
+                    throw new RuntimeException("O id: " + jsonCategory.get("id") + " do cliente " + jsonCategory.get("name") + " tem o valor " + category);
                 }
             }
         }
@@ -90,7 +90,15 @@ public class ValidacaoAliareUnicoscamposnullCamposvalosdiferentes {
                     if (currencyInt == 1000 && ratingDouble >= 9.5 && ratingDouble < 10) {
 
                     } else
-                        System.out.println("O id: " + jsonValidation.get("id") + " esta irregular e precisa de uma correcao");
+                        throw new RuntimeException("O id: " + jsonValidation.get("id") + " esta irregular e precisa de uma correcao, pois o campo currency e rating nao esta com o valor surgerido");
+                }
+                if (currencyClass.equals("Integer") && ratingClass.equals("Integer")) {
+                    int currencyInt = (int) jsonValidation.get("currency");
+                    int ratingInt = (int) jsonValidation.get("rating");
+                    if (currencyInt == 1000 && ratingInt >= 9.5 && ratingInt < 10) {
+
+                    } else
+                        throw new RuntimeException("O id: " + jsonValidation.get("id") + " esta irregular e precisa de uma correcao, pois o campo currency e rating nao esta com o valor surgerido");
                 }
             }
         }
