@@ -29,14 +29,14 @@ public class ValidacaoAliareUnicoscamposnullCamposquantidasValordiferente {
     }
 
     @When("Sera validado a quantidade dentro do campo {string}, sera permitido apenas {int} itens")
-    public void seraValidadoAQuantidadeDentroDoCampoSeraPermitidoApenasItens(String string, Integer int1) {
+    public void seraValidadoAQuantidadeDentroDoCampoSeraPermitidoApenasItens(String productColor, Integer numberPermitted) {
         for (Object listProductColors : response) {
             JSONObject jsonObject = new JSONObject(listProductColors.toString());
-            if (jsonObject.has("product_colors")) {
-                JSONArray jsonArray = jsonObject.getJSONArray("product_colors");
+            if (jsonObject.has(productColor)) {
+                JSONArray jsonArray = jsonObject.getJSONArray(productColor);
                 int enterprise = jsonArray.length();
                 System.out.println("A empresa " + jsonObject.get("name") + " tem: " + enterprise + " itens dentro do campo product_colors");
-                if (jsonArray.length() > 20) {
+                if (jsonArray.length() > numberPermitted) {
                     throw new RuntimeException("Só é permitido 20 itens para cada empresa:\n" + jsonObject.get("name") + " tem " + jsonArray.length() + " objetos");
                 }
             }
@@ -44,14 +44,14 @@ public class ValidacaoAliareUnicoscamposnullCamposquantidasValordiferente {
     }
 
     @When("Sera validado a quantidade dentro do campo {string}, pode ter apenas {int} itens")
-    public void seraValidadoAQuantidadeDentroDoCampoPodeTerApenasItens(String string, Integer int1) {
+    public void seraValidadoAQuantidadeDentroDoCampoPodeTerApenasItens(String tagList, Integer numberPermitted) {
         for (Object listTagListArray : response) {
             JSONObject jsonTagList = new JSONObject(listTagListArray.toString());
-            if (jsonTagList.has("tag_list")) {
-                JSONArray jsonArrayTagList = jsonTagList.getJSONArray("tag_list");
+            if (jsonTagList.has(tagList)) {
+                JSONArray jsonArrayTagList = jsonTagList.getJSONArray(tagList);
                 int enterprise = jsonArrayTagList.length();
                 System.out.println("A empresa " + jsonTagList.get("name") + " tem: " + enterprise + " itens dentro do campo tag_list");
-                if (jsonArrayTagList.length() > 10) {
+                if (jsonArrayTagList.length() > numberPermitted) {
                     throw new RuntimeException("Só é permitido 10 itens para cada empresa:\n" + jsonTagList.get("name") + " tem " + jsonArrayTagList.length() + " objetos");
                 }
             }
@@ -59,10 +59,10 @@ public class ValidacaoAliareUnicoscamposnullCamposquantidasValordiferente {
     }
 
     @Then("Sera feita a validacao que o campo {string} nao pode ter o valor em analise")
-    public void seraFeitaAValidacaoQueOCampoNaoPodeTerOValorEmAnalise(String string) {
+    public void seraFeitaAValidacaoQueOCampoNaoPodeTerOValorEmAnalise(String productType) {
         for (Object listProductTipo : response) {
             JSONObject jsonProductTipo = new JSONObject(listProductTipo.toString());
-            if (jsonProductTipo.get("product_type").equals("em analise")) {
+            if (jsonProductTipo.get(productType).equals("em analise")) {
                 throw new RuntimeException("O campo product_type não pode tá em analise:\n" + "id: " + jsonProductTipo.get("id") + " do cliente: " + jsonProductTipo.get("name"));
             }
         }

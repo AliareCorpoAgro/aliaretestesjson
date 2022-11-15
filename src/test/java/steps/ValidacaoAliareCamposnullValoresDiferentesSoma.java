@@ -48,7 +48,7 @@ public class ValidacaoAliareCamposnullValoresDiferentesSoma {
     }
 
     @When("Sera validado a soma total dos campos {string}")
-    public void seraValidadoASomaTotalDosCampos(String string) {
+    public void seraValidadoASomaTotalDosCampos(String baseContratual) {
         JSONArray jsonArray;
         jsonArray = response.getJSONArray("enterprises_buy");
 
@@ -57,7 +57,7 @@ public class ValidacaoAliareCamposnullValoresDiferentesSoma {
             newResponse = new JSONObject(listEnterprises.toString());
             if (newResponse.has("especialization")) {
                 newResponse = newResponse.getJSONObject("especialization");
-                int sam = (int) newResponse.get("base_contratual");
+                int sam = (int) newResponse.get(baseContratual);
                 valueTotal = valueTotal + sam;
 
             }
@@ -72,7 +72,7 @@ public class ValidacaoAliareCamposnullValoresDiferentesSoma {
             newResponse = new JSONObject(listAgro.toString());
             if (newResponse.has("especialization")) {
                 newResponse = newResponse.getJSONObject("especialization");
-                int samAgro = (int) newResponse.get("base_contratual");
+                int samAgro = (int) newResponse.get(baseContratual);
                 valueTotalAgro = valueTotalAgro + samAgro;
             }
         }
