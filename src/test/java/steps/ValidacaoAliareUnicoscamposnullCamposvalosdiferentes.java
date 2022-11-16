@@ -113,9 +113,9 @@ public class ValidacaoAliareUnicoscamposnullCamposvalosdiferentes {
             JSONArray jsonArrayProductColors = jsonValidationCamp.getJSONArray(produtColors);
             int productColors = jsonArrayProductColors.length();
             if (tagList > number) {
-                if (productColors > number) {
-                    throw new RuntimeException("O id: " + jsonValidationCamp.get("id") + " tem os campos tag_list e products_colors maior do que 10");
-                }
+                throw new RuntimeException("O id: " + jsonValidationCamp.get("id") + " tem o campo tag_list  maior do que 10");
+            } else if (productColors > number) {
+                throw new RuntimeException("O id: " + jsonValidationCamp.get("id") + " tem o campo products_colors maior do que 10");
             }
         }
 

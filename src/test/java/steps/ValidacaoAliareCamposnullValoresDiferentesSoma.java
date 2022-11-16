@@ -33,6 +33,17 @@ public class ValidacaoAliareCamposnullValoresDiferentesSoma {
                 iFNull(newResponse, listNull.toString());
             }
         }
+
+        newResponse = response.getJSONObject("base_data");
+        iFNull(newResponse, "base_data");
+        if (newResponse.has("solid")) {
+            newResponse = newResponse.getJSONObject("solid");
+            iFNull(newResponse, "solid");
+            if (newResponse.has("cust")) {
+                iFNull(newResponse, "cust");
+            }
+        }
+
         JSONArray jsonArrayAgro;
         jsonArrayAgro = response.getJSONArray("enterprises_buy_agro");
         iFNull(response, "enterprises_buy_agro");
@@ -96,9 +107,10 @@ public class ValidacaoAliareCamposnullValoresDiferentesSoma {
         for (Object listAgro : jsonAgro) {
             newResponse = new JSONObject(listAgro.toString());
             if (newResponse.has("tipo")) {
-                String getTipo = newResponse.toString();
-                if (getTipo != "AGRO" || getTipo != "VENDA") {
-                    throw new RuntimeException("O campo Tipo só pode ser AGRO ou VENDA");
+                String getTipo = newResponse.get("tipo").toString();
+                if (!getTipo.equals("AGRO") || getTipo.equals("VENDA")) {
+                    throw new RuntimeException("O campo Tipo só pode ser AGRO ou VENDA, e o campo do cliente: " + newResponse.get("nome") + " esta " + getTipo);
+
                 }
             }
         }
