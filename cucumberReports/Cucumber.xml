@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="5.13">
+    <testcase classname="Validar Json Aliare, campos null, soma do campo Base Contratual, campo TIPO com valor diferente" name="Validando Json, campos null, soma do campo Base Contratual, campo TIPO com valor diferente" time="4.687">
+        <system-out><![CDATA[Given Que seja efetuado um GET no endpoint "http://demo1310142.mockable.io/".passed
+When For efetuado validacao de campos para que nao sejam null...............passed
+And Sera validado a soma total dos campos "base_contratual".................passed
+And Sera validado que o campo "tipo" da enterprise_buy que so pode ter o valor VENDA ou NEGOCIO.passed
+And Sera validado se o campo "type" tiver valor diferente de contrato anual deve ser contabilizado.passed
+Then Sera validado que o campo tipo nao seja exista valores diferentes de AGRO e AFRE.passed
+]]></system-out>
+    </testcase>
+</testsuite>

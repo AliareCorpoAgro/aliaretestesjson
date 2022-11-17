@@ -13,7 +13,12 @@ import static io.restassured.RestAssured.given;
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         glue = {"steps"},
         publish = true,
-        tags = "@Test"
+        tags = "@Test",
+        plugin = {"pretty","json:cucumberReports/reports.json",
+                "junit:cucumberReports/Cucumber.xml",
+                "html:cucumberReports/reports2.html"},
+        monochrome = true,
+        dryRun = false
 )
 public class InicializationTest {
 

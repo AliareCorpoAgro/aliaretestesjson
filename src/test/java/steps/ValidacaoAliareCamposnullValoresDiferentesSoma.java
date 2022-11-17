@@ -39,9 +39,9 @@ public class ValidacaoAliareCamposnullValoresDiferentesSoma {
         if (newResponse.has("solid")) {
             newResponse = newResponse.getJSONObject("solid");
             iFNull(newResponse, "solid");
-            if (newResponse.has("cust")) {
-                iFNull(newResponse, "cust");
-            }
+//            if (newResponse.has("cust")) {
+//                iFNull(newResponse, "cust");
+//            }
         }
 
         JSONArray jsonArrayAgro;
@@ -90,17 +90,52 @@ public class ValidacaoAliareCamposnullValoresDiferentesSoma {
         System.out.println("O valor do array enterprises_buy_agro, path: base_contratual: " + valueTotalAgro);
     }
 
-    @Then("Sera validado que o campo tipo nao seja exista valores diferentes de AGRO e VENDA")
-    public void seraValidadoQueOCampoTipoNaoSejaExistaValoresDiferentesDeAGROEVENDA() {
-        JSONArray jsonArray;
-        jsonArray = response.getJSONArray("enterprises_buy");
+    @When("Sera validado que o campo {string} da enterprise_buy que so pode ter o valor VENDA ou NEGOCIO")
+    public void seraValidadoQueOCampoDaEnterpriseBuyQueSoPodeTerOValorVENDAOuNEGOCIO(String tipo) {
+        JSONArray jsonArrayTipo;
+        jsonArrayTipo = response.getJSONArray("enterprises_buy");
+        for (Object listTipo : jsonArrayTipo) {
+            newResponse = new JSONObject(listTipo.toString());
+            if (newResponse.has(tipo)) {
+                String getTipo = newResponse.get(tipo).toString();
+                if (getTipo.equals("VENDA") || getTipo.equals("NEGOCIO")) {
 
-        for (Object listEnterprises : jsonArray) {
-            newResponse = new JSONObject(listEnterprises.toString());
-            if (newResponse.has("especialization")) {
-                newResponse = newResponse.getJSONObject("especialization");
+                } else
+                    throw new RuntimeException("O campo Tipo só pode ser VENDA ou NEGOCIO da enterprises_buy, e o campo do cliente: " + newResponse.get("nome") + " esta " + getTipo);
             }
         }
+    }
+
+    @When("Sera validado se o campo {string} tiver valor diferente de contrato anual deve ser contabilizado")
+    public void seraValidadoSeOCampoTiverValorDiferenteDeContratoAnualDeveSerContabilizado(String type) {
+        JSONArray jsonArrayType;
+        jsonArrayType = response.getJSONArray("enterprises_buy");
+        for (Object listType : jsonArrayType) {
+            newResponse = new JSONObject(listType.toString());
+            JSONObject json = newResponse.getJSONObject("especialization");
+            json = json.getJSONObject("command");
+            String typeValidation = json.get(type).toString();
+            if (!typeValidation.equals("contrato anual")){
+                throw new RuntimeException("O campo type de enterprises_buy tem que ter o valor contrato anual, mas o cliente: " + newResponse.get("nome") + " tem o valor " + typeValidation);
+            }
+            JSONArray jsonArrayTypeAgro = response.getJSONArray("enterprises_buy_agro");
+            for (Object listAgro : jsonArrayTypeAgro){
+                newResponse = new JSONObject(listAgro.toString());
+                JSONObject jsonAgro = newResponse.getJSONObject("especialization");
+                jsonAgro = jsonAgro.getJSONObject("command");
+                String getTypeAgro = jsonAgro.get(type).toString();
+                if (!getTypeAgro.equals("contrato anual")){
+                    throw new RuntimeException("O campo type de enterprises_buy_agro tem que ter o valor contrato anual, mas o cliente: " + newResponse.get("nome") + " tem o valor " + getTypeAgro);
+                }
+            }
+
+        }
+
+    }
+
+    @Then("Sera validado que o campo tipo nao seja exista valores diferentes de AGRO e AFRE")
+    public void seraValidadoQueOCampoTipoNaoSejaExistaValoresDiferentesDeAGROEAFRE() {
+
         JSONArray jsonAgro;
         jsonAgro = response.getJSONArray("enterprises_buy_agro");
 
@@ -108,10 +143,10 @@ public class ValidacaoAliareCamposnullValoresDiferentesSoma {
             newResponse = new JSONObject(listAgro.toString());
             if (newResponse.has("tipo")) {
                 String getTipo = newResponse.get("tipo").toString();
-                if (!getTipo.equals("AGRO") || getTipo.equals("VENDA")) {
-                    throw new RuntimeException("O campo Tipo só pode ser AGRO ou VENDA, e o campo do cliente: " + newResponse.get("nome") + " esta " + getTipo);
+                if (getTipo.equals("AGRO") || getTipo.equals("AFRE")) {
 
-                }
+                } else
+                    throw new RuntimeException("O campo Tipo só pode ser AGRO ou VENDA da enterprises_buy_agro, e o campo do cliente: " + newResponse.get("nome") + " esta " + getTipo);
             }
         }
 

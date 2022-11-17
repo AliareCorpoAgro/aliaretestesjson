@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="0.361">
+    <testcase classname="Validar campos null, soma do campo Base Contratual, campo TIPO nao pode ter valor diferente do surgerido, e campo TYPE validado nao pode ter valor diferente do surgerido" name="validando campos null, soma do campo Base Contratual, campo TIPO, e campo TYPE" time="0.065">
+        <system-out><![CDATA[Given Que seja efetuado um GET no endpoint da mockable http://demo3675470.mockable.io/.passed
+When For efetuado validacao de campos para que nao sejam null...............passed
+And For validado a soma total dos campos base_contratual....................passed
+And For validado que o campo tipo da enterprise_buy que so pode ter o valor VENDA ou NEGOCIO.passed
+And For validado se o campo type tiver valor diferente de contrato anual deve ser contabilizado.passed
+Then Sera validado que o campo tipo da enterprise_buy_agro nao seja exista valores diferentes de AGRO e AFRE.passed
+]]></system-out>
+    </testcase>
+</testsuite>
